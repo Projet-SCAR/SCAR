@@ -1,61 +1,46 @@
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
+import os
 import cv2 as cv
+from PIL import Image
 
-img1= cv.imread('peclerey1600__2020-09-27__09-00-00(1).jpg')
-img2 = cv.imread('peclerey1600__2020-07-08__09-00-00(1).jpg')
-img3= cv.imread('para1900__2019-11-22__13-00-00(1).jpg')
-img4= cv.imread('para1900__2020-06-01__13-00-00(1).jpg')
-img5= cv.imread('para2100__2020-07-20__16-00-00(1).jpg')
-img6= cv.imread('Para2100__2020-11-21__09-00-00(1).jpg')
-img7= cv.imread('peclerey1400Planet__2021-04-14__09-00-00(1).jpg')
-img8= cv.imread('peclerey1400Planet__2021-07-03__09-00-00(1).jpg')
-img9= cv.imread('peclerey2200Nord__2020-12-21__09-00-00(1).jpg')
 
+seuils = [75, 100, 125, 150, 175, 200, 225, 250]
+print("niveaux de seuils", seuils)
 imgs = []
-imgs.append(img1)
-imgs.append(img2)
-imgs.append(img3)
-imgs.append(img4)
-imgs.append(img5)
-imgs.append(img6)
-imgs.append(img7)
-imgs.append(img8)
-imgs.append(img9)
+dir  = os.getcwd()
+dir,__ = os.path.split(dir)
+imgs_path = os.listdir(dir + '/IMGS_9')
+imgs_path.sort()
 
-seuils = [ 75, 100, 125, 150, 175, 200, 225, 250]
+for i in imgs_path:
+    imgs +=[cv.imread(f"{dir}/IMGS_9/{i}")]
 
-def resize(img, scale_percent):
-    img=img[0:img.shape[0]-80,0:img.shape[1]]
-    width = int(img.shape[1] * scale_percent / 100)
-    height = int(img.shape[0] * scale_percent / 100)
-    dim = (width, height)
-    res = cv.resize(img, dim, interpolation=cv.INTER_CUBIC)
-    return(res)
-
-#seuillage
-def seuillage(img, seuil):
-    gray = cv.cvtColor(img, cv.COLOR_BGR2GRAY)
-    ret1,th1 = cv.threshold(gray, seuil, 255, cv.THRESH_BINARY+cv.THRESH_OTSU)
-    th1=th1/255
-    return(th1)
-
-
-def run(imgs,seuils): 
-    fig, axs = plt.subplots(9, 9, figsize = (40, 25))
-    for i in range(len(imgs)):
-        for j in range (len(seuils)):
-        
-        
-            img=resize(imgs[i],50) 
-            img=cv.medianBlur(img, 5)
-            img=seuillage(img, seuils[j])
-            axs[i][j].set_title(seuils[j])
-            axs[i][j].imshow(img)  
-            
-      
-    
-        
-run(imgs,seuils)
+fig, axs = plt.subplots(1, 9, figsize = (40, 10))
+for i in range(len(imgs)):
+    img=imgs[i]
+    plt.imshow(imgs[i])
+    #img=img[0:img.shape[0]-80,0:img.shape[1]]
+    ##img=cv.medianBlur(img, 5)
+    #axs[i].imshow(imgs[i])
+    #axs[i].set_title(imgs_path[i][:-29])
 plt.show()
+
+plt.rcParams.update({'font.size': 40})
+fig, axs = plt.subplots(9, 9, figsize = (40, 25))
+for i in range (len(imgs)-1):
+    img=imgs[i]
+    gray = cv.cvtColor(img, cv.COLOR_BGR2GRAY)
+    axs[i][0].imshow(img)
+    axs[i][0].set_axis_off()
+    axs[i][0].set_title(imgs_path[i][:-29])
+    for j in range (len(seuils)):
+        seuil=seuils[j]
+        ret1,th1 = cv.threshold(gray, seuil, 255, cv.THRESH_BINARY)
+        axs[i][j+1].imshow(th1)
+        axs[i][j+1].set_axis_off()
+        axs[i][j+1].set_title(f'seuil={seuil}')
+plt.tight_layout()
+plt.show()
+
