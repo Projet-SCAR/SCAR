@@ -1,4 +1,3 @@
-
 import pandas as pd
 import numpy as np
 
@@ -39,7 +38,9 @@ def graph_vert():
         img=resize(img,50) 
         d['taux_vert'].append(detectvert(img))
         i=image.find("_")
-        d['date'].append(image[i+2:i+12]
+        d['date'].append(image[i+2:i+12])
+        
+    
         
     return(d)
 
