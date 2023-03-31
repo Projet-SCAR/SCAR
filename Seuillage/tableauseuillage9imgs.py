@@ -21,9 +21,9 @@ fig, axs = plt.subplots(1, 9, figsize = (40, 10))
 for i in range(len(imgs)):
     img=imgs[i]
     plt.imshow(imgs[i])
-    #img=img[0:img.shape[0]-80,0:img.shape[1]]
-    ##img=cv.medianBlur(img, 5)
-    #axs[i].imshow(imgs[i])
+    img=img[0:img.shape[0]-80,0:img.shape[1]]
+    img=cv.medianBlur(img, 5)
+    axs[i].imshow(imgs[i])
     #axs[i].set_title(imgs_path[i][:-29])
 plt.show()
 
