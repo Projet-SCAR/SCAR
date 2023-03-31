@@ -1,17 +1,10 @@
+#importation
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
-# from mpl_toolkits.mplot3d import Axes3D
-# from matplotlib import colors
-# from skimage.color import rgb2gray, rgb2hsv, hsv2rgb
-# from skimage.io import imread, imshow
-# from sklearn.cluster import KMeans
-# from keras.models import load_model
-# from PIL import Image, ImageOps
 import os
-
 import cv2 as cv
-
+#création d'un tableau avec 9 images
 img1= cv.imread('peclerey1600__2020-09-27__09-00-00(1).jpg')
 img2 = cv.imread('peclerey1600__2020-07-08__09-00-00(1).jpg')
 img3= cv.imread('para1900__2019-11-22__13-00-00(1).jpg')
@@ -33,6 +26,7 @@ imgs.append(img7)
 imgs.append(img8)
 imgs.append(img9)
 
+#fonction pour recadrer l'image
 def resize(img, scale_percent):
     img=img[0:img.shape[0]-80,0:img.shape[1]]
     width = int(img.shape[1] * scale_percent / 100)
@@ -40,26 +34,29 @@ def resize(img, scale_percent):
     dim = (width, height)
     res = cv.resize(img, dim, interpolation=cv.INTER_CUBIC)
     return(res)
-#seuillage
+
+#fonction de seuillage
 def seuillage(img):
     gray = cv.cvtColor(img, cv.COLOR_BGR2GRAY)
     ret1,th1 = cv.threshold(gray, 0, 255, cv.THRESH_BINARY+cv.THRESH_OTSU)
     th1=th1/255
     return(np.sum(th1)*100/np.size(th1))
 
-#dectection de vert
+#fonction de dectection de vert
 def detectvert(img):
     mask2 = cv.inRange(img, (0, 50, 0), (100,255,90))
     mask2=mask2/255
     return(np.sum(mask2)*100/np.size(mask2))
 
-
+#main
 def run(img): 
+    #on affiche le tableau d'image
     for i in range(len(img)):
         img=img[i]
         img=resize(img,50) 
         plt.imshow(img)
         plt.show()
+        #algorithme de l'arbre de proba
         taux_vert=detectvert(img)
         print(taux_vert)
         if taux_vert>20:
@@ -73,14 +70,3 @@ def run(img):
         
 
 run(imgs)
-#trouver le blanc
-
-#mask blanc
-    
-#mask1 = cv.inRange(img, (190, 150, 190), (255, 255,255))
-#
-#implot2= plt.imshow(mask1)
-#plt.title('detection de blanc')
-#plt.show()
-#
-##mask vert
