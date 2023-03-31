@@ -29,7 +29,7 @@ plt.show()
 
 plt.rcParams.update({'font.size': 40})
 fig, axs = plt.subplots(9, 9, figsize = (40, 25))
-for i in range (len(imgs)-1):
+for i in range (len(imgs)):
     img=imgs[i]
     gray = cv.cvtColor(img, cv.COLOR_BGR2GRAY)
     axs[i][0].imshow(img)
