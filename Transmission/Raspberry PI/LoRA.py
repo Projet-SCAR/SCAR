@@ -1,3 +1,5 @@
+#Programme test pour voir si la liaison LoRa fonctionnait :^)
+
 import time
 import serial
 
