@@ -4,6 +4,7 @@ import struct
 import csv
 from influxdb import InfluxDBClient
 
+
 client = InfluxDBClient(host='localhost', port=8086, database='ScarDB')
 client.switch_database('ScarDB')
 
