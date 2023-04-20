@@ -1,3 +1,4 @@
+#Premier test pour le LoRa côté émetteur
 import time
 import serial
 
