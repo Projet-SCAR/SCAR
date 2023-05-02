@@ -1,4 +1,5 @@
 #!/usr/bin/python
+""" Ce code n'es pas utilisé, il l'étais pour l'expérimentation de l'écriture de donnée sous format csv"""
 import csv
 import smbus
 import time
