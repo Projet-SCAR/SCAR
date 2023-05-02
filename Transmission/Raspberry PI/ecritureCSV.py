@@ -4,11 +4,14 @@ import csv
 import smbus
 import time
 import struct
+# Lecture de la liaison I2C
 bus = smbus.SMBus(1)
 time.sleep(1)
 address = 0x8
+# Creation ou écriture sur data.csv
 d = open('data.csv','w',newline='')
 w = csv.writer(d)
+# Récupération des infos
 while True:
     try:
         L = bus.read_i2c_block_data(address,0,12)
@@ -36,6 +39,7 @@ while True:
 #         pdb.set-trace()
         Li=['Nan','NaN','NaN',time.ctime()]
     print(Li)
+    # Ecrtiture dans le csv
     w.writerow(Li)
     d.flush()
     time.sleep(1);
