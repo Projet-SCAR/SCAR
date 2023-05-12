@@ -20,3 +20,8 @@ Partie Seuillage :
 - seuillagearbreproba9imgs.py est un programme effectuant le seuillage sur plusieurs images.
 - tableauseuillage9imgs.py est un programme qui permet de tester plusieurs valeurs de seuils pour cette détection par seuillage.
 
+Partie détection d'animaux :
+- 1_image_importée.py permet de détecter les éléments présents sur une image importée depuis l'ordinateur
+- 1_image_camera_ecole.py se connecte à la caméra reliée au réseau de l'école et détecte les éléments dessus (nécessite une connexion au réseau de l'école ou au VPN)
+- detection_en_direct.py fait un traitement en direct sur le flux d'image de la caméra reliée au réseau de l'école (nécessite une connexion au réseau de l'école ou au VPN)
+- 
