@@ -15,6 +15,8 @@ cv2.startWindowThread()
 
 #importation du model YOLO utilisé
 model = YOLO("yolov8l.pt")
+
+#Importation d'une image
 img = Image.open("animal.JPG")
         
 #Application du modèle YOLO sur l'image
